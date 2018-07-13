@@ -1,25 +1,28 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 
 import HeroeListItem from './HeroeListItem';
 
 const HeroeList = props => {
-    const { heroes } = props;
-    const items = heroes.map(heroe => {
-        return <HeroeListItem key={heroe.id} heroe={heroe} />
-    })
+  const { heroes, onPressItem } = props;
 
-    return (
-        <View style={ styles.container }>
-            { items }
-        </View>
-    );
+  return (
+    <FlatList 
+      style={styles.container} 
+      data={heroes} 
+      renderItem={({ item }) => (
+        <HeroeListItem
+            heroe={item}
+            navigateToHeroeDetail={onPressItem} />
+        )}
+        keyExtractor={item => item.name} />
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#303030'
-    }
+  container: {
+      backgroundColor: '#303030'
+  }
 });
 
 export default HeroeList;
