@@ -1,4 +1,6 @@
+import React from 'react';
 import { YellowBox, StatusBar } from 'react-native';
+import SearchBar from 'react-native-search-bar';
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 
 import { createStackNavigator } from 'react-navigation';
@@ -21,7 +23,10 @@ export default createStackNavigator({
           fontFamily: 'Barlow Condensed',
           color: '#FFFFFF'
         }
-      })
+      });
+      {/* <SearchBar
+            ref='searchBar'
+            placeholder='Search'/> */}
     }
   },
   'HeroeDetail': {

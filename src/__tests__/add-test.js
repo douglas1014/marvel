@@ -1,10 +1,8 @@
-import React from 'react';
-import HeroePage from '../pages/HeroePage';
+import getCharacters from '../services/MarvelService';
 
-test('Retorno da API = 20', () => {
-    const Heroes = props => {
-        const { heroes } = props
-    };
-    expect(heroes.length).toBe(20);
+test('Retorno da API = 20', async () => {
+    return getCharacters().then((resolve) => {
+        const data = resolve.data.data.results;    
+        expect(data.length).toBe(20);
+    });
 });
-

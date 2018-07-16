@@ -1,6 +1,5 @@
 import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-
 import HeroeListItem from './HeroeListItem';
 
 const HeroeList = props => {
