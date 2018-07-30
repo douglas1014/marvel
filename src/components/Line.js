@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 
 const Line = ({ label, content }) => {
+    const message = `Our writer is busy saving the Semantics World. so this character doesn't have a description yet!`;
     return ( 
         <View style={styles.container}>
             <Text style={styles.textName}>{ label }</Text>
-            <Text style={styles.textDescription}>{ content }</Text>
+            <Text style={styles.textDescription}>{ content ? content : message}</Text>
         </View>
     );
 }
