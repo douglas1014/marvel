@@ -1,17 +1,46 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { connect } from 'react-redux';
+import { getImages } from '../actions';
 
-const ComicItem = ({ comic }) => {
-    const message = `Sorry, it seems like there are no comics registered yet.`;
+class ComicItem extends React.Component {
+  constructor() {
+    super();
 
-    return (
+    this.state = {
+      idImage: 0
+    }
+  }
+
+  componentDidMount() {
+    const { comic } = this.props;
+    this.props.getImages(comic.resourceURI);
+  }
+
+  renderComic() {
+    const { comic } = this.props;
+    const { images } = this.props;
+
+    if(images.length) {
+      let imgSrc = images[0].thumbnail.path + '/portrait_small.' + images[0].thumbnail.extension;
+      console.log('imgSrc: ', imgSrc);
+      return (
         <View style={styles.containerList}>
-            {/* <Image style={ styles.image } source={{ uri: store.payload.request.url }} /> */}
-            <Text style={styles.comicTextName}>{comic.name}</Text>
-            {/* <Image style={ style.image } source={{ uri: heroe.thumbnail.path + '/portrait_small.' + heroe.thumbnail.extension }} /> */}
+          <Image style={ styles.image } source={{ uri: imgSrc }} />
+          <Text style={styles.comicTextName}>{comic.name}</Text>
         </View>
-    );
-}
+      );
+    }
+  }
+
+  render() {
+      return (
+        <View>
+          {this.renderComic()}
+        </View>
+      );
+    }
+  }
 
 const styles = StyleSheet.create({
     containerList: {
@@ -27,12 +56,30 @@ const styles = StyleSheet.create({
         minHeight: 58
     },
     image: {
-
+      aspectRatio: 1,
+      width: 30,
+      marginRight: 8
     },
     comicTextName: {
         color: 'white',
-        fontSize: 16
+        fontSize: 10
     }
 });
 
-export default ComicItem;
+const mapStateToProps = state => {
+  const { loading, error, images } = state.comic_image;
+  return {
+    loading,
+    error,
+    images
+  }
+}
+
+const mapDispatchToProps = {
+  getImages
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ComicItem);

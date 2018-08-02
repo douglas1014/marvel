@@ -34,7 +34,7 @@ class HeroesList extends React.Component {
 
 const mapStateToProps = state => {
   const { loading, error, heroes } = state.hero;
-  console.log(heroes)
+  // console.log(heroes)
   return {
     loading,
     error,

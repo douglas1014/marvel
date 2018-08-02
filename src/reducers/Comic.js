@@ -1,7 +1,7 @@
 import { COMIC_IMAGE } from '../types';
 
 const initialState = {
-  comics: [],
+  images: [],
   loading: false,
   error: null,
 };
@@ -19,14 +19,14 @@ const comicImageReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        comic_images: [
+        images: [
           ...state,
           ...action.payload.data.data.results
         ],
       }
     case COMIC_IMAGE.REQUEST_FAIL:
       // console.log('HERO.REQUEST_FAIL')
-      console.log(action)
+      // console.log(action)
       return {
         ...state,
         loading: false,

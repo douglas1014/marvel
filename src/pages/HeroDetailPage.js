@@ -1,21 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { View, Text, Image, FlatList, StyleSheet } from 'react-native';
-import { getComics } from '../actions';
+import { View, Text, Image, FlatList, StyleSheet, ScrollView } from 'react-native';
 import Line from '../components/Line';
 import ComicItem from '../components/ComicItem';
+import Loading from '../components/Loading';
 
 class HeroeDetailPage extends React.Component {
-  /* componentDidMount() {
-    this.props.getComics();
-    console.log('getComics: ', this.props.getComics());
-  } */
-
   render() {
     const { heroe } = this.props.navigation.state.params;
+    const { loading } = this.props
+    if (loading) return <Loading />
+
     const imgSrc = `${heroe.thumbnail.path}/portrait_small.${heroe.thumbnail.extension}`
     return (
-      <View style={styles.container}>
+      <ScrollView>
+        <View style={styles.container}>
           <Image style={styles.avatar} source={{ uri: imgSrc }} />
           <View>
               <Line label={heroe.name} content={heroe.description} />
@@ -26,26 +24,14 @@ class HeroeDetailPage extends React.Component {
                 renderItem={({ item }) => (
                   <ComicItem comic={item} />
                 )}
-                keyExtractor={item => item.name}
-              />
+                keyExtractor={item => item.name} />
           </View>
-      </View>
-    )
+        </View>
+      </ScrollView>
+    );
   }
 }
 
-const mapStateToProps = state => {
-  const { error, comics } = state.comic_image;
-  console.log(comics);
-  return {
-    error,
-    comics
-  }
-}
-
-const mapDispatchToProps = {
-  getComics
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -74,7 +60,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HeroeDetailPage)
+export default HeroeDetailPage;

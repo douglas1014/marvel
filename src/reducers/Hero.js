@@ -26,7 +26,7 @@ const heroReducer = (state = initialState, action) => {
       }
     case HERO.REQUEST_FAIL:
       // console.log('HERO.REQUEST_FAIL')
-      console.log(action)
+      // console.log(action)
       return {
         ...state,
         loading: false,
