@@ -2,7 +2,7 @@ import md5 from 'js-md5';
 import { PUB_KEY, PRIV_KEY } from '../environment';
 import { COMIC_IMAGE } from '../types';
 
-export function getImages(uri) {
+export function getComics(uri) {
   const timestamp = Number(new Date());
   const hash = md5.create();
   hash.update(timestamp + PRIV_KEY + PUB_KEY)

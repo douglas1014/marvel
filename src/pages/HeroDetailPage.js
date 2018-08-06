@@ -1,14 +1,11 @@
 import React from 'react';
 import { View, Text, Image, FlatList, StyleSheet, ScrollView } from 'react-native';
 import Line from '../components/Line';
-import ComicItem from '../components/ComicItem';
-import Loading from '../components/Loading';
+import ComicsList from '../components/ComicsList';
 
 class HeroeDetailPage extends React.Component {
   render() {
     const { heroe } = this.props.navigation.state.params;
-    const { loading } = this.props
-    if (loading) return <Loading />
 
     const imgSrc = `${heroe.thumbnail.path}/portrait_small.${heroe.thumbnail.extension}`
     return (
@@ -18,13 +15,7 @@ class HeroeDetailPage extends React.Component {
           <View>
               <Line label={heroe.name} content={heroe.description} />
               <Text style={styles.textName}>Comics</Text>
-              <FlatList
-                data={heroe.comics.items}
-                style={styles.containerList}
-                renderItem={({ item }) => (
-                  <ComicItem comic={item} />
-                )}
-                keyExtractor={item => item.name} />
+              <ComicsList uri={heroe.comics.collectionURI} />
           </View>
         </View>
       </ScrollView>
@@ -40,23 +31,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1
   },
-  containerList: {
-      backgroundColor: '#303030',
-      flex: 1
-  },
   avatar: {
-      aspectRatio: 1,
-      width: 200,
-      height: 200,
-      borderRadius: 200
+    aspectRatio: 1,
+    width: 200,
+    height: 200,
+    borderRadius: 200
   },
   textName: {
-      color: '#FFFFFF',
-      fontSize: 20,
-      fontWeight: 'bold',
-      paddingTop: 15,
-      paddingBottom: 10,
-      alignSelf: 'center'
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: 'bold',
+    paddingTop: 15,
+    paddingBottom: 10,
+    alignSelf: 'center'
   }
 })
 

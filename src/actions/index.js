@@ -1,2 +1,2 @@
 export { getHeroes } from './Hero';
-export { getImages } from './Comic';
+export { getComics } from './Comic';
