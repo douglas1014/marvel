@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, StyleSheet, Image } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { getComics } from '../actions';
 import ComicItem from '../components/ComicItem';
@@ -13,6 +13,7 @@ class ComicsList extends React.Component {
 
   render() {
     const { loading } = this.props
+    console.log('loading: ', loading);
 
     if (loading) return <Loading />
 
@@ -24,7 +25,7 @@ class ComicsList extends React.Component {
           <ComicItem
               comic={item} />
           )}
-        keyExtractor={item => item.name} 
+        keyExtractor={item => item.title} 
       />
     )
   }

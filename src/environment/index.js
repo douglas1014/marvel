@@ -1,3 +1,3 @@
-export const PUB_KEY = 'c6672fd52f6842bc6e5b7aafad4f05dd';
-export const PRIV_KEY = '14717a5513bbdbdbdec3fbefe88c07345253df7a';
+export const PUB_KEY = '84b2a8c8f545b7ea967f2b3c13a36876';
+export const PRIV_KEY = '9c69ee8d6d109893f8521518daeb7702554623e0';
 export const BASE_URL = 'https://gateway.marvel.com/v1/public';

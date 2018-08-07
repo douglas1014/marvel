@@ -20,7 +20,7 @@ const heroReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         heroes: [
-          ...state,
+          ...state.heroes,
           ...action.payload.data.data.results
         ],
       }

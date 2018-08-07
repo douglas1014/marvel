@@ -4,10 +4,11 @@ import {
 } from 'react-native';
 import { View, ActivityIndicator } from 'react-native'
 
-const Loading = () => {
+const Loading = props => {
+  const { size } = props;
   return (
     <View style={style.container}>
-      <ActivityIndicator size={75} color='#BB3040' />
+      <ActivityIndicator size={size} color='#BB3040' />
     </View>
   )
 };

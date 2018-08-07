@@ -24,13 +24,14 @@ const styles = StyleSheet.create({
     minHeight: 58
   },
   comicTextName: {
+    fontFamily: "BarlowCondensed-Regular",
     color: 'white',
     fontSize: 16,
   },
   image: {
     aspectRatio: 1,
-    width: 33,
-    height: 51,
+    width: 50,
+    height: 30,
     marginRight: 8,
   }
 });

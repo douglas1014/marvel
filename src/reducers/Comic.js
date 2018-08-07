@@ -2,7 +2,7 @@ import { COMIC_IMAGE } from '../types';
 
 const initialState = {
   comics: [],
-  loading: false,
+  loading: true,
   error: null,
 };
 
