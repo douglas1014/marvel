@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FlatList, StyleSheet, ActivityIndicator, View } from 'react-native';
-// import SearchBar from 'react-native-searchbar';
+import { FlatList, StyleSheet,  View } from 'react-native';
 import { Toolbar } from 'react-native-material-ui';
 
-import { getHeroes } from '../actions';
+import { getHeroes, getHeroesSearch } from '../actions';
 
 import HeroesListItem from './HeroesListItem';
 import Loading from './Loading';
@@ -15,7 +14,7 @@ class HeroesList extends React.Component {
 
     this.state = {
       offset: 0,
-      searchHeroes: [],
+      search: false
     }
   }
 
@@ -30,20 +29,54 @@ class HeroesList extends React.Component {
   }
 
   findHeroes(text) {
-    this.props.getHeroes(0, text);
-    /* const listHeroes = [];
-    if(text.length > 3) {
-      listHeroes.push(heroes.find((item) => item.name.indexOf(text)));
-      console.log('listHeroes: ', listHeroes);
-      this.setState({ searchHeroes: listHeroes });
-    } else {
-      this.setState({ searchHeroes: [] });
-    }
-    console.log('Obj: ', this.state.searchHeroes) */
+    if(text.length >= 3) {
+      // this.props.getHeroes(0, text);
+      this.props.getHeroesSearch(text);
+      this.setState({ search: true });
+    } else this.setState({ search: false });
+    console.log('heroes_search: ', this.props.heroes_search)
   };
 
+  renderItem() {
+    const { loading, onPressItem, heroes, heroes_search } = this.props
+
+    if(this.state.search) {
+      return (
+        <FlatList
+          style={style.containerList}
+          data={heroes_search}
+          renderItem={({ item }) => (
+            <HeroesListItem
+                heroe={item}
+                navigateToHeroeDetail={onPressItem} />
+            )}
+          keyExtractor={item => item.name}
+        />
+      );
+    }
+    return ( 
+      <FlatList
+        style={style.containerList}
+        data={heroes}
+        renderItem={({ item }) => (
+          <HeroesListItem
+              heroe={item}
+              navigateToHeroeDetail={onPressItem} />
+          )}
+        onEndReached={() => 
+          this.setState({ offset: this.state.offset + 20 },
+          () => this.fetchData())}
+        onEndReachedThreshold={0.5}
+        keyExtractor={item => item.name}
+        ListFooterComponent={() => {
+          return (this.props.loading && <Loading size={30} />)
+        }}
+      /> 
+    );
+  }
+
   render() {
-    const { loading, onPressItem, heroes } = this.props
+    const { loading, onPressItem, heroes, heroes_search } = this.props
 
     if (this.state.offset == 0 && loading) return <Loading size={50} />
     console.log('heroes: ', this.props.heroes);
@@ -54,31 +87,20 @@ class HeroesList extends React.Component {
           searchable={{
             autoFocus: true,
             placeholder: 'Name of character',
-            onChangeText: (text) => this.props.getHeroes(text)
+            onChangeText: (text) => this.findHeroes(text)
           }}
           style={{
             container: {backgroundColor: "#B50F16"},
+            centerElement: {color: 'white'},
+            leftElement: {color: 'white'},
+            rightElement: {color: 'white'},
             titleText: style.titleText,
-            centerElementContainer: style.centerElementContainer
+            centerElementContainer: {
+
+            }
           }}
         />
-        <FlatList
-          style={style.containerList}
-          data={heroes}
-          renderItem={({ item }) => (
-            <HeroesListItem
-                heroe={item}
-                navigateToHeroeDetail={onPressItem} />
-            )}
-          onEndReached={() => 
-            this.setState({ offset: this.state.offset + 20 },
-            () => this.fetchData())}
-          onEndReachedThreshold={0.5}
-          keyExtractor={item => item.name}
-          ListFooterComponent={() => {
-            return (this.props.loading && <Loading size={30} />)
-          }}
-        />
+        {this.renderItem()}
       </View>
     )
   }
@@ -86,15 +108,18 @@ class HeroesList extends React.Component {
 
 const mapStateToProps = state => {
   const { loading, error, heroes } = state.hero;
+  const { heroes_search } = state.search;
   return {
     loading,
     error,
-    heroes
+    heroes,
+    heroes_search
   }
 }
 
 const mapDispatchToProps = {
-  getHeroes
+  getHeroes,
+  getHeroesSearch
 }
 
 const style = StyleSheet.create({
@@ -112,6 +137,7 @@ const style = StyleSheet.create({
   },
   titleText: {
     fontFamily: "BarlowCondensed-Regular",
+    color: 'white',
     fontSize: 16,
   },
   centerElementContainer: {

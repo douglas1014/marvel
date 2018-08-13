@@ -16,6 +16,7 @@ const heroReducer = (state = initialState, action) => {
       }
     case HERO.REQUEST_SUCCESS:
       console.log('HERO_REQUEST_SUCCESS')
+      console.log('HEROREDUCER: ', state.heroes, action.payload.data.data.results)
       return {
         ...state,
         loading: false,
@@ -23,6 +24,7 @@ const heroReducer = (state = initialState, action) => {
           ...state.heroes,
           ...action.payload.data.data.results
         ],
+        heroes_search: action.payload.data.data.results
       }
     case HERO.REQUEST_FAIL:
       // console.log('HERO.REQUEST_FAIL')

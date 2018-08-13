@@ -9,3 +9,9 @@ export const COMIC_IMAGE = {
   REQUEST_SUCCESS: 'marvel/comic/REQUEST_SUCCESS',
   REQUEST_FAIL: 'marvel/comic/REQUEST_FAIL',
 };
+
+export const SEARCH = {
+  REQUEST: 'marvel/search/REQUEST',
+  REQUEST_SUCCESS: 'marvel/search/REQUEST_SUCCESS',
+  REQUEST_FAIL: 'marvel/search/REQUEST_FAIL',
+};
